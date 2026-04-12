@@ -42,14 +42,14 @@ const AboutSection = () => {
             className="space-y-5 text-muted-foreground leading-relaxed font-body text-lg max-w-xl"
           >
             <p>
-              I'm a graphic designer with more than 2 years of experience creating clear, effective visuals for businesses and events. My work isn't about making things "pretty" — it's about making them <span className="text-foreground font-semibold">work</span>.
+              I'm a graphic designer with more than 2 years of experience creating clear, effective visuals for businesses and events. My work isn't about making things "pretty," it's about making them <span className="text-foreground font-semibold">work</span>.
             </p>
             <p>
               From logos and packaging to event graphics and social media creatives, I deliver designs that communicate fast, look professional, and hold attention.
             </p>
           </motion.div>
 
-          {/* Experience — bold inline typographic treatment */}
+          {/* Experience: bold inline typographic treatment */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

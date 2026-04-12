@@ -18,7 +18,7 @@ const ContactSection = () => {
     <section id="contact" className="pt-20 md:pt-32 pb-6 md:pb-10 relative">
       <div className="container mx-auto px-4 md:px-12">
         <div className="grid md:grid-cols-12 gap-8 md:gap-16">
-          {/* Left — big heading */}
+          {/* Left: big heading */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -32,7 +32,7 @@ const ContactSection = () => {
               <span className="text-gradient-orange italic font-display normal-case">something bold ‎ </span>
             </h2>
             <p className="text-muted-foreground leading-relaxed max-w-md font-body text-base md:text-lg">
-              Have a project in mind? Whether it's a brand identity, event graphics, or packaging — I'm ready to bring your vision to life.
+              Have a project in mind? Whether it's a brand identity, event graphics, or packaging, I'm ready to bring your vision to life.
             </p>
 
             <motion.button
@@ -83,7 +83,7 @@ const ContactSection = () => {
           </motion.div>
         </div>
 
-        {/* Footer — reduced bottom space */}
+        {/* Footer: reduced bottom space */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}

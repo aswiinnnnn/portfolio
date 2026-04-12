@@ -89,7 +89,7 @@ const WorkSection = () => {
 
         {/* Desktop: Bento asymmetric grid */}
         <div className="hidden lg:grid grid-cols-12 gap-3 lg:gap-5">
-          {/* Brand & Business — large spanning card */}
+          {/* Brand & Business: large spanning card */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -167,7 +167,7 @@ const WorkSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.8, delay: 0.35 }}
-            className="col-span-5 relative group bg-foreground/[0.03] bg-neutral-900/60 border border-border/40 rounded-3xl p-8 hover:border-primary/30 transition-all duration-500 overflow-hidden"
+            className="col-span-8 relative group bg-foreground/[0.03] bg-neutral-900/60 border border-border/40 rounded-3xl p-8 hover:border-primary/30 transition-all duration-500 overflow-hidden"
           >
             <div className="absolute bottom-0 left-0 w-24 h-24 bg-primary/5 rounded-tr-[50px] group-hover:bg-primary/10 transition-colors duration-500" />
             <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-primary/60 mb-4 block">05</span>

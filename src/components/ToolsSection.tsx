@@ -145,7 +145,7 @@ const ToolsSection = () => {
           </div>
         </div>
 
-        {/* Marquee — moved to between tools and portfolio naturally */}
+        {/* Marquee: moved to between tools and portfolio naturally */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}

@@ -1,18 +1,22 @@
 import { motion } from "framer-motion";
-import heroBg from "@/assets/hero-bg.jpg";
+import heroBg from "@/assets/hero-bg.webp";
+import heroBgDesktop from "@/assets/hero-bg-desktop.webp";
 
 const HeroSection = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background image */}
-      <div className="absolute inset-0">
-        <img
-          src={heroBg}
-          alt=""
-          loading="lazy"
-          className="w-full h-full object-cover opacity-40 will-change-opacity"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/40 to-background" />
+      <div className="absolute inset-0 z-0">
+        <picture>
+          <source srcSet={heroBgDesktop} media="(min-width: 1024px)" />
+          <img
+            src={heroBg}
+            alt=""
+            loading="lazy"
+            className="w-full h-full object-cover lg:object-[95%_top] lg:scale-125 transition-transform duration-1000 opacity-30 brightness-[0.7] will-change-transform"
+          />
+        </picture>
+        <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/20 to-background" />
       </div>
 
       {/* Content */}
@@ -59,7 +63,7 @@ const HeroSection = () => {
             className="mt-12 flex flex-col md:flex-row md:items-end gap-6 md:gap-16 will-change-transform"
           >
             <p className="text-muted-foreground text-lg md:text-xl max-w-md font-body leading-relaxed">
-              I design visuals that businesses actually use — not just decorate with.
+              I design visuals that businesses actually use, not just decorate with.
             </p>
             <div className="flex gap-3 font-mono text-xs tracking-wider text-muted-foreground">
               <span>Branding</span>
