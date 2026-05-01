@@ -1,5 +1,25 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
+
+const bentoVariants = {
+  hidden: { opacity: 0, y: 40, scale: 0.96 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { delay: i * 0.1, duration: 0.7, ease: [0.22, 1, 0.36, 1] as any },
+  }),
+};
+
+const letterVariants = {
+  hidden: { opacity: 0, y: 50, rotateX: -40 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    rotateX: 0,
+    transition: { delay: 0.2 + i * 0.03, duration: 0.8, ease: [0.22, 1, 0.36, 1] as any },
+  }),
+};
 
 const categories = [
   {
@@ -72,7 +92,7 @@ const WorkSection = () => {
   }, [activeIndex]);
 
   return (
-    <section id="work" className="py-20 md:py-32 relative">
+    <section id="work" className="py-20 md:py-32 relative overflow-hidden">
       <div className="container mx-auto px-4 md:px-12">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -81,9 +101,50 @@ const WorkSection = () => {
           transition={{ duration: 0.8 }}
           className="mb-12 md:mb-20"
         >
-          <p className="font-mono text-xs tracking-[0.3em] uppercase text-primary mb-4">Services</p>
-          <h2 className="font-display text-4xl md:text-7xl lg:text-[6rem] font-black uppercase tracking-tighter leading-[0.9]">
-            What ‎  I ‎ <span className="text-gradient-orange italic font-display">Create ‎ </span>
+          <div className="flex items-center gap-3 mb-4">
+            <motion.span
+              className="inline-block w-6 h-px bg-primary"
+              initial={{ scaleX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              style={{ originX: 0 }}
+            />
+            <p className="font-mono text-xs tracking-[0.3em] uppercase text-primary label-mono">Services</p>
+          </div>
+          <h2 className="font-display text-4xl md:text-7xl lg:text-[6rem] font-black uppercase tracking-tighter leading-[0.9] flex flex-wrap gap-x-4">
+            <span className="flex">
+              {"What ‎ I".split("").map((char, i) => (
+                <motion.span
+                  key={i}
+                  custom={i}
+                  variants={letterVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  className="inline-block"
+                  style={{ display: char === " " ? "inline" : "inline-block" }}
+                >
+                  {char === " " ? "\u00a0" : char}
+                </motion.span>
+              ))}
+            </span>
+            <span className="text-shimmer italic font-display flex lowercase">
+              {"create  ‎".split("").map((char, i) => (
+                <motion.span
+                  key={i}
+                  custom={i + 6}
+                  variants={letterVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  className="inline-block"
+                  style={{ display: char === " " ? "inline" : "inline-block" }}
+                >
+                  {char === " " ? "\u00a0" : char}
+                </motion.span>
+              ))}
+            </span>
           </h2>
         </motion.div>
 
@@ -91,10 +152,11 @@ const WorkSection = () => {
         <div className="hidden lg:grid grid-cols-12 gap-3 lg:gap-5">
           {/* Brand & Business: large spanning card */}
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            custom={0}
+            variants={bentoVariants}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.8 }}
             className="col-span-7 relative group bg-foreground/[0.03] backdrop-blur-sm border border-border/40 rounded-3xl p-12 hover:border-primary/30 transition-all duration-500 overflow-hidden will-change-transform"
           >
             <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-[60px] group-hover:bg-primary/10 transition-colors duration-500" />
@@ -109,10 +171,12 @@ const WorkSection = () => {
 
           {/* Event Graphics — tall card */}
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            custom={1}
+            variants={bentoVariants}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.8, delay: 0.1 }}
+            whileHover={{ boxShadow: "0 0 40px hsl(14 100% 49% / 0.12)" }}
             className="col-span-5 row-span-2 relative group bg-foreground/[0.03] bg-neutral-900/60 border border-border/40 rounded-3xl p-10 hover:border-primary/30 transition-all duration-500"
           >
             <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-primary/60 mb-6 block">02</span>
@@ -129,10 +193,12 @@ const WorkSection = () => {
 
           {/* Digital — accent card */}
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            custom={2}
+            variants={bentoVariants}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            whileHover={{ boxShadow: "0 0 40px hsl(14 100% 49% / 0.15)" }}
             className="col-span-4 relative group bg-primary/[0.06] bg-neutral-900/60 border border-primary/20 rounded-3xl p-8 hover:border-primary/40 transition-all duration-500"
           >
             <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-primary/60 mb-4 block">03</span>
@@ -148,10 +214,12 @@ const WorkSection = () => {
 
           {/* Specialized */}
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            custom={3}
+            variants={bentoVariants}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.8, delay: 0.3 }}
+            whileHover={{ boxShadow: "0 0 30px hsl(14 100% 49% / 0.12)" }}
             className="col-span-3 relative group bg-foreground/[0.03] bg-neutral-900/60 border border-border/40 rounded-[2rem] p-8 hover:border-primary/30 transition-all duration-500"
           >
             <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-primary/60 mb-4 block">04</span>
@@ -163,10 +231,12 @@ const WorkSection = () => {
 
           {/* Print Media — new card */}
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            custom={4}
+            variants={bentoVariants}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.8, delay: 0.35 }}
+            whileHover={{ boxShadow: "0 0 40px hsl(14 100% 49% / 0.12)" }}
             className="col-span-8 relative group bg-foreground/[0.03] bg-neutral-900/60 border border-border/40 rounded-3xl p-8 hover:border-primary/30 transition-all duration-500 overflow-hidden"
           >
             <div className="absolute bottom-0 left-0 w-24 h-24 bg-primary/5 rounded-tr-[50px] group-hover:bg-primary/10 transition-colors duration-500" />
@@ -181,10 +251,12 @@ const WorkSection = () => {
 
           {/* UI / Visual — new card */}
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            custom={5}
+            variants={bentoVariants}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+            whileHover={{ boxShadow: "0 0 30px hsl(14 100% 49% / 0.10)" }}
             className="col-span-4 relative group bg-primary/[0.04] bg-neutral-900/60 border border-primary/15 rounded-[2rem] p-8 hover:border-primary/30 transition-all duration-500"
           >
             <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-primary/60 mb-4 block">06</span>

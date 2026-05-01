@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ArrowUpRight } from "lucide-react";
 import { useEffect } from "react";
-import { FaWhatsapp,FaInstagram ,FaPhone ,FaEnvelope  } from "react-icons/fa";
+import { FaWhatsapp, FaInstagram, FaPhone, FaEnvelope } from "react-icons/fa";
 
 interface ContactModalProps {
   open: boolean;
@@ -10,20 +10,20 @@ interface ContactModalProps {
 
 const contactOptions = [
   {
-    icon: FaEnvelope,
-    label: "Email",
-    subtitle: "ashwinrajkc@gmail.com",
-    href: "mailto:ashwinrajkc@gmail.com?subject=Project%20Inquiry&body=Hello%20Ashwin,%0A%0AI%20found%20your%20portfolio%20and%20would%20like%20to%20discuss%20a%20potential%20project.%0A%0APlease%20let%20me%20know%20your%20availability.%0A%0AThank%20you,",
-    color: "from-grey-500/20 to-orange-500/20",
-    borderColor: "hover:border-orange-500/40",
-  },
-  {
     icon: FaWhatsapp,
     label: "WhatsApp",
     subtitle: "Quick chat on WhatsApp",
     href: "https://wa.me/918848532354?text=Hi%20Ashwin!%20I%20visited%20your%20portfolio%20and%20I%E2%80%99d%20like%20to%20discuss%20a%20project%20with%20you.",
     color: "from-grey-500/20 to-emerald-500/20",
     borderColor: "hover:border-green-500/40",
+  },
+  {
+    icon: FaEnvelope,
+    label: "Email",
+    subtitle: "ashwinrajkc@gmail.com",
+    href: "mailto:ashwinrajkc@gmail.com?subject=Project%20Inquiry&body=Hello%20Ashwin,%0A%0AI%20found%20your%20portfolio%20and%20would%20like%20to%20discuss%20a%20potential%20project.%0A%0APlease%20let%20me%20know%20your%20availability.%0A%0AThank%20you,",
+    color: "from-grey-500/20 to-orange-500/20",
+    borderColor: "hover:border-orange-500/40",
   },
   {
     icon: FaInstagram,
@@ -36,8 +36,8 @@ const contactOptions = [
   {
     icon: FaPhone,
     label: "Call Me",
-    subtitle: "+91 98765 43210",
-    href: "tel:+919876543210",
+    subtitle: "+91 88485 32354",
+    href: "tel:+918848532354",
     color: "from-grey-500/20 to-cyan-500/20",
     borderColor: "hover:border-blue-500/40",
   },
