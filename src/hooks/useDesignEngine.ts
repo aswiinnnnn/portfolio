@@ -15,6 +15,21 @@ export const TOOL_MODES = [
   "Pan"
 ];
 
+export const TOOL_HINTS = [
+  "Click and drag to select elements on the canvas.",
+  "Click to place points and create custom vector paths.",
+  "Hover over any area to inspect pixels in high detail.",
+  "Toggle architectural alignment guides for layout precision.",
+  "Click and drag between two points to measure distances.",
+  "Define color transitions by dragging across the workspace.",
+  "Select a region to define new viewport boundaries.",
+  "Click anywhere to place and edit custom typography.",
+  "Click and drag to draw perfect circles and ellipses.",
+  "Sample precise color values directly from the artwork.",
+  "Use smart edge detection for complex shape selections.",
+  "Drag to pan across the canvas or hold space to move."
+];
+
 const STUDIO_COLORS = ["#ff5a28", "#00f0ff", "#ff00ff", "#ffffff", "#0a0a0a", "#222222"];
 
 interface Point { x: number; y: number; }
