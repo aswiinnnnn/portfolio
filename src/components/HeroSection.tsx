@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import heroBg from "@/assets/hero-bg.webp";
 import heroBgDesktop from "@/assets/hero-bg-desktop.webp";
-import { useDesignEngine, TOOL_MODES } from "@/hooks/useDesignEngine";
+import { useDesignEngine, TOOL_MODES, TOOL_HINTS } from "@/hooks/useDesignEngine";
 import { useInkTrail } from "@/hooks/useInkTrail";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { 
@@ -294,11 +294,18 @@ const HeroSection = () => {
       {!isMobile && activeMode !== -1 && (
         <div className="absolute bottom-8 left-24 z-50 pointer-events-none">
           <AnimatePresence mode="wait">
-            <motion.div key={activeMode} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }} className="flex flex-col">
+            <motion.div key={activeMode} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }} className="flex flex-col gap-1">
               <div className="flex flex-col">
                 <span className="text-[10px] font-mono text-primary/60 tracking-[0.4em] uppercase mb-1">Active Tool</span>
                 <span className="text-xl font-display font-black text-white tracking-tight uppercase">{TOOL_MODES[activeMode]}</span>
               </div>
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="flex items-center gap-3">
+                <div className="w-1 h-3 bg-primary/40 rounded-full" />
+                <span className="text-[10px] font-mono text-white/40 uppercase tracking-widest leading-none">
+                  <span className="text-white/60 mr-2">How to use:</span>
+                  {TOOL_HINTS[activeMode]}
+                </span>
+              </motion.div>
             </motion.div>
           </AnimatePresence>
         </div>
