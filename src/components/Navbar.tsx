@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ArrowUpRight } from "lucide-react";
 import ContactModal from "./ContactModal";
+import { fireConfetti } from "@/utils/confetti";
 
 const navItems = [
   { label: "About", href: "#about" },
@@ -31,7 +32,7 @@ const Navbar = () => {
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ delay: 1.4, duration: 1 }}
-      className="fixed top-4 inset-x-0 mx-auto z-50 w-[92%] max-w-5xl"
+      className="fixed top-4 inset-x-0 mx-auto z-50 w-[92%] max-w-5xl select-none"
     >
       <div
         className={`flex items-center justify-between px-5 md:px-6 py-3 rounded-2xl border transition-all duration-500 ${
@@ -40,9 +41,14 @@ const Navbar = () => {
             : "bg-background/10 backdrop-blur-xl border-border/30"
         }`}
       >
-        <a href="#" className="font-display text-xl font-bold text-foreground tracking-tight">
+        <motion.a
+          href="#"
+          className="font-display text-xl font-bold text-foreground tracking-tight"
+          whileHover={{ scale: 1.05 }}
+          transition={{ type: "spring", stiffness: 400 }}
+        >
           A<span className="text-primary">.</span>
-        </a>
+        </motion.a>
 
         {/* Desktop */}
         <div className="hidden md:flex items-center gap-1">
@@ -50,14 +56,18 @@ const Navbar = () => {
             <a
               key={item.label}
               href={item.href}
-              className="font-mono text-[11px] tracking-[0.15em] uppercase text-muted-foreground hover:text-foreground px-4 py-2 rounded-xl hover:bg-foreground/5 transition-all"
+              className="relative font-mono text-[11px] tracking-[0.15em] uppercase text-muted-foreground hover:text-foreground px-4 py-2 rounded-xl hover:bg-foreground/5 transition-all group"
             >
               {item.label}
             </a>
           ))}
           <button
-            onClick={() => setContactOpen(true)}
-            className="ml-2 font-mono text-[11px] tracking-[0.15em] uppercase bg-primary/90 backdrop-blur-sm text-primary-foreground px-5 py-2 rounded-xl hover:bg-primary transition-all hover:shadow-[0_0_20px_hsl(0_72%_51%/0.4)]"
+            onClick={(e) => {
+              const rect = (e.currentTarget as HTMLButtonElement).getBoundingClientRect();
+              fireConfetti(rect.left + rect.width / 2, rect.top + rect.height / 2);
+              setTimeout(() => setContactOpen(true), 350);
+            }}
+            className="ml-2 font-mono text-[11px] tracking-[0.15em] uppercase bg-primary/90 backdrop-blur-sm text-primary-foreground px-5 py-2 rounded-xl hover:bg-primary transition-all hover:shadow-[0_0_25px_hsl(0_72%_51%/0.5)] btn-glow relative overflow-hidden"
           >
             Hire Me
           </button>
@@ -114,7 +124,11 @@ const Navbar = () => {
             </div>
 
             <motion.button
-              onClick={() => { setMenuOpen(false); setTimeout(() => setContactOpen(true), 300); }}
+              onClick={(e) => {
+                const rect = (e.currentTarget as HTMLButtonElement).getBoundingClientRect();
+                fireConfetti(rect.left + rect.width / 2, rect.top + rect.height / 2);
+                setTimeout(() => { setMenuOpen(false); setTimeout(() => setContactOpen(true), 300); }, 200);
+              }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
