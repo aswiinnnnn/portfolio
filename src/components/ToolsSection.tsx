@@ -47,20 +47,58 @@ const tools = [
   },
 ];
 
-// Hook for 3D magnetic tilt on hover
+// Smooth magnetic 3D tilt with spring easing
 function useTilt(ref: React.RefObject<HTMLDivElement | null>) {
+  const animRef = useRef<number>(0);
+  const currentTilt = useRef({ x: 0, y: 0 });
+  const targetTilt = useRef({ x: 0, y: 0 });
+  const glareRef = useRef<HTMLDivElement | null>(null);
+  const isHovered = useRef(false);
+  const currentOpacity = useRef(0);
+
+  const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+
+  const animate = (el: HTMLDivElement) => {
+    currentTilt.current.x = lerp(currentTilt.current.x, targetTilt.current.x, 0.1);
+    currentTilt.current.y = lerp(currentTilt.current.y, targetTilt.current.y, 0.1);
+    currentOpacity.current = lerp(currentOpacity.current, isHovered.current ? 0.15 : 0, 0.15);
+    
+    el.style.transform = `perspective(800px) rotateY(${currentTilt.current.x}deg) rotateX(${currentTilt.current.y}deg) scale3d(1.04,1.04,1.04)`;
+    
+    if (glareRef.current) {
+      const gx = (currentTilt.current.x / 15) * 50 + 50;
+      const gy = (-currentTilt.current.y / 15) * 50 + 50;
+      glareRef.current.style.background = `radial-gradient(circle at ${gx}% ${gy}%, rgba(255,255,255,${currentOpacity.current}), transparent 65%)`;
+    }
+
+    const dist = Math.abs(currentTilt.current.x) + Math.abs(currentTilt.current.y) + currentOpacity.current;
+    if (dist > 0.01) {
+      animRef.current = requestAnimationFrame(() => animate(el));
+    } else {
+      if (glareRef.current) glareRef.current.style.background = "none";
+    }
+  };
+
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const el = ref.current;
     if (!el) return;
+    isHovered.current = true;
     const rect = el.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width - 0.5;
     const y = (e.clientY - rect.top) / rect.height - 0.5;
-    el.style.transform = `perspective(600px) rotateY(${x * 12}deg) rotateX(${-y * 12}deg) scale(1.03)`;
+    targetTilt.current = { x: x * 15, y: -y * 15 };
+    cancelAnimationFrame(animRef.current);
+    animRef.current = requestAnimationFrame(() => animate(el));
   };
+
   const handleMouseLeave = () => {
-    if (ref.current) ref.current.style.transform = "";
+    isHovered.current = false;
+    targetTilt.current = { x: 0, y: 0 };
+    const el = ref.current;
+    if (el) animRef.current = requestAnimationFrame(() => animate(el));
   };
-  return { onMouseMove: handleMouseMove, onMouseLeave: handleMouseLeave };
+
+  return { onMouseMove: handleMouseMove, onMouseLeave: handleMouseLeave, glareRef };
 }
 
 const ToolCard = ({
@@ -84,7 +122,7 @@ const ToolCard = ({
 
   if (variant === "mobile-wide") {
     return (
-      <motion.div {...baseMotion} ref={ref} {...tilt}
+      <motion.div {...baseMotion} ref={ref} onMouseMove={tilt.onMouseMove} onMouseLeave={tilt.onMouseLeave}
         className={`${tool.bgColor} backdrop-blur-sm border ${tool.borderColor} rounded-[1.5rem] p-5 transition-all duration-300 tilt-card`}
         style={{ boxShadow: `0 0 0px ${tool.accentColor}00`, transition: "transform 0.2s ease, box-shadow 0.3s ease" }}
         onMouseEnter={() => { if (ref.current) ref.current.style.boxShadow = `0 0 30px ${tool.accentColor}22`; }}
@@ -103,7 +141,7 @@ const ToolCard = ({
 
   if (variant === "mobile-row") {
     return (
-      <motion.div {...baseMotion} ref={ref} {...tilt}
+      <motion.div {...baseMotion} ref={ref} onMouseMove={tilt.onMouseMove} onMouseLeave={tilt.onMouseLeave}
         className={`${tool.bgColor} backdrop-blur-sm border ${tool.borderColor} rounded-[1.3rem] p-4 transition-all duration-300 tilt-card`}
         onMouseEnter={() => { if (ref.current) ref.current.style.boxShadow = `0 0 25px ${tool.accentColor}22`; }}
         onMouseLeave={(e) => { tilt.onMouseLeave(); if (ref.current) ref.current.style.boxShadow = "none"; }}
@@ -117,7 +155,7 @@ const ToolCard = ({
 
   if (variant === "tablet") {
     return (
-      <motion.div {...baseMotion} ref={ref} {...tilt}
+      <motion.div {...baseMotion} ref={ref} onMouseMove={tilt.onMouseMove} onMouseLeave={tilt.onMouseLeave}
         className={`${tool.bgColor} backdrop-blur-sm border ${tool.borderColor} rounded-[1.5rem] p-5 transition-all duration-300 tilt-card`}
         onMouseEnter={() => { if (ref.current) ref.current.style.boxShadow = `0 0 30px ${tool.accentColor}25`; }}
         onMouseLeave={(e) => { tilt.onMouseLeave(); if (ref.current) ref.current.style.boxShadow = "none"; }}
@@ -137,14 +175,21 @@ const ToolCard = ({
     <motion.div
       {...baseMotion}
       ref={ref}
-      {...tilt}
-      className={`group relative backdrop-blur-sm border ${tool.borderColor} hover:border-primary/30 transition-all duration-300 overflow-hidden tilt-card ${
+      {...{ onMouseMove: tilt.onMouseMove, onMouseLeave: tilt.onMouseLeave }}
+      className={`group relative backdrop-blur-sm border ${tool.borderColor} hover:border-primary/30 transition-colors duration-300 overflow-hidden tilt-card ${
         index === 1 ? `${tool.bgColor} rounded-[2rem] p-10` : `${tool.bgColor} rounded-3xl p-8`
       }`}
-      style={{ transition: "transform 0.2s ease, box-shadow 0.3s ease" }}
+      style={{ transition: "box-shadow 0.3s ease", willChange: "transform" }}
       onMouseEnter={() => { if (ref.current) ref.current.style.boxShadow = `0 0 20px ${tool.accentColor}15, 0 10px 20px rgba(0,0,0,0.2)`; }}
       onMouseLeave={(e) => { tilt.onMouseLeave(); if (ref.current) ref.current.style.boxShadow = "none"; }}
     >
+      {/* Dynamic glare sheen */}
+      <div
+        ref={tilt.glareRef}
+        className="absolute inset-0 pointer-events-none rounded-inherit z-10"
+        style={{ borderRadius: "inherit", transition: "background 0.05s ease" }}
+      />
+
       {/* Shimmer overlay on hover */}
       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none overflow-hidden">
         <div
@@ -225,7 +270,7 @@ const ToolsSection = () => {
               ))}
             </span>
             <span className="text-shimmer italic font-display flex lowercase">
-              {"Tools".split("").map((char, i) => (
+              {"Tools  ‎ ".split("").map((char, i) => (
                 <motion.span
                   key={i}
                   custom={i + 2}

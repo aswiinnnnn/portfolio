@@ -448,7 +448,7 @@ const PortfolioSection = () => {
               ))}
             </span>
             <span className="text-shimmer italic font-display flex lowercase">
-              {"Works".split("").map((char, i) => (
+              {"Works  ‎ ".split("").map((char, i) => (
                 <motion.span
                   key={i}
                   custom={i + 8}

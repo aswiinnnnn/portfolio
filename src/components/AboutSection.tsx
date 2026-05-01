@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 const wordVariants = {
@@ -21,7 +21,6 @@ const letterVariants = {
 };
 
 const AboutSection = () => {
-  const statRef = useRef<HTMLDivElement>(null);
 
   const headingWords = ["Practical", "design"];
   const headingOrangeWords = ["for", "real", "impact"];
@@ -124,7 +123,6 @@ const AboutSection = () => {
 
           {/* Experience stat — animated counter */}
           <motion.div
-            ref={statRef}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}

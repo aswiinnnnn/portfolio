@@ -130,7 +130,7 @@ const WorkSection = () => {
               ))}
             </span>
             <span className="text-shimmer italic font-display flex lowercase">
-              {"create ‎".split("").map((char, i) => (
+              {"create  ‎".split("").map((char, i) => (
                 <motion.span
                   key={i}
                   custom={i + 6}
@@ -157,7 +157,6 @@ const WorkSection = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
-            data-hover="Get Details"
             className="col-span-7 relative group bg-foreground/[0.03] backdrop-blur-sm border border-border/40 rounded-3xl p-12 hover:border-primary/30 transition-all duration-500 overflow-hidden will-change-transform"
           >
             <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-[60px] group-hover:bg-primary/10 transition-colors duration-500" />
@@ -178,7 +177,6 @@ const WorkSection = () => {
             whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
             whileHover={{ boxShadow: "0 0 40px hsl(14 100% 49% / 0.12)" }}
-            data-hover="Get Details"
             className="col-span-5 row-span-2 relative group bg-foreground/[0.03] bg-neutral-900/60 border border-border/40 rounded-3xl p-10 hover:border-primary/30 transition-all duration-500"
           >
             <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-primary/60 mb-6 block">02</span>
@@ -201,7 +199,6 @@ const WorkSection = () => {
             whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
             whileHover={{ boxShadow: "0 0 40px hsl(14 100% 49% / 0.15)" }}
-            data-hover="Get Details"
             className="col-span-4 relative group bg-primary/[0.06] bg-neutral-900/60 border border-primary/20 rounded-3xl p-8 hover:border-primary/40 transition-all duration-500"
           >
             <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-primary/60 mb-4 block">03</span>
@@ -223,7 +220,6 @@ const WorkSection = () => {
             whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
             whileHover={{ boxShadow: "0 0 30px hsl(14 100% 49% / 0.12)" }}
-            data-hover="Get Details"
             className="col-span-3 relative group bg-foreground/[0.03] bg-neutral-900/60 border border-border/40 rounded-[2rem] p-8 hover:border-primary/30 transition-all duration-500"
           >
             <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-primary/60 mb-4 block">04</span>
@@ -241,7 +237,6 @@ const WorkSection = () => {
             whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
             whileHover={{ boxShadow: "0 0 40px hsl(14 100% 49% / 0.12)" }}
-            data-hover="Get Details"
             className="col-span-8 relative group bg-foreground/[0.03] bg-neutral-900/60 border border-border/40 rounded-3xl p-8 hover:border-primary/30 transition-all duration-500 overflow-hidden"
           >
             <div className="absolute bottom-0 left-0 w-24 h-24 bg-primary/5 rounded-tr-[50px] group-hover:bg-primary/10 transition-colors duration-500" />
@@ -262,7 +257,6 @@ const WorkSection = () => {
             whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
             whileHover={{ boxShadow: "0 0 30px hsl(14 100% 49% / 0.10)" }}
-            data-hover="Get Details"
             className="col-span-4 relative group bg-primary/[0.04] bg-neutral-900/60 border border-primary/15 rounded-[2rem] p-8 hover:border-primary/30 transition-all duration-500"
           >
             <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-primary/60 mb-4 block">06</span>
