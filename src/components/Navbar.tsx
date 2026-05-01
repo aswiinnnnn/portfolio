@@ -40,9 +40,14 @@ const Navbar = () => {
             : "bg-background/10 backdrop-blur-xl border-border/30"
         }`}
       >
-        <a href="#" className="font-display text-xl font-bold text-foreground tracking-tight">
+        <motion.a
+          href="#"
+          className="font-display text-xl font-bold text-foreground tracking-tight"
+          whileHover={{ scale: 1.05 }}
+          transition={{ type: "spring", stiffness: 400 }}
+        >
           A<span className="text-primary">.</span>
-        </a>
+        </motion.a>
 
         {/* Desktop */}
         <div className="hidden md:flex items-center gap-1">
@@ -50,14 +55,14 @@ const Navbar = () => {
             <a
               key={item.label}
               href={item.href}
-              className="font-mono text-[11px] tracking-[0.15em] uppercase text-muted-foreground hover:text-foreground px-4 py-2 rounded-xl hover:bg-foreground/5 transition-all"
+              className="relative font-mono text-[11px] tracking-[0.15em] uppercase text-muted-foreground hover:text-foreground px-4 py-2 rounded-xl hover:bg-foreground/5 transition-all group"
             >
               {item.label}
             </a>
           ))}
           <button
             onClick={() => setContactOpen(true)}
-            className="ml-2 font-mono text-[11px] tracking-[0.15em] uppercase bg-primary/90 backdrop-blur-sm text-primary-foreground px-5 py-2 rounded-xl hover:bg-primary transition-all hover:shadow-[0_0_20px_hsl(0_72%_51%/0.4)]"
+            className="ml-2 font-mono text-[11px] tracking-[0.15em] uppercase bg-primary/90 backdrop-blur-sm text-primary-foreground px-5 py-2 rounded-xl hover:bg-primary transition-all hover:shadow-[0_0_25px_hsl(0_72%_51%/0.5)] btn-glow relative overflow-hidden"
           >
             Hire Me
           </button>

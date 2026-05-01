@@ -3,6 +3,16 @@ import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, X, Images, ChevronLeft, ChevronRight } from "lucide-react";
 
+const letterVariants = {
+  hidden: { opacity: 0, y: 50, rotateX: -40 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    rotateX: 0,
+    transition: { delay: 0.2 + i * 0.03, duration: 0.8, ease: [0.22, 1, 0.36, 1] as any },
+  }),
+};
+
 // Project assets - Keep these as they are verified
 import p1_1 from "../assets/project1/1.webp";
 import p1_2 from "../assets/project1/2.webp";
@@ -194,6 +204,7 @@ const ProjectCard = memo(({
     return (
       <div
         onClick={onClick}
+        data-hover="Click to view"
         className={`relative overflow-hidden cursor-pointer border border-border/20 ${layout?.className || ""} ${layout?.height || "h-[220px]"} rounded-[1.5rem]`}
       >
         <ProjectImage src={project.images[0]} alt={project.title} className="absolute inset-0 w-full h-full" />
@@ -215,6 +226,7 @@ const ProjectCard = memo(({
       viewport={{ once: true, margin: "50px" }}
       transition={{ duration: 0.5, ease: "easeOut" }}
       onClick={onClick}
+      data-hover="Click to view"
       className={`${layout.span} ${layout.height} ${layout.rounded} relative group cursor-pointer overflow-hidden border border-border/20 hover:border-primary/30 transition-all duration-300 will-change-transform`}
     >
       <ProjectImage
@@ -407,9 +419,50 @@ const PortfolioSection = () => {
     <section id="portfolio" className="py-20 md:py-32 relative overflow-hidden bg-background">
       <div className="container mx-auto px-4 md:px-12">
         <header className="mb-10 md:mb-16">
-          <p className="font-mono text-xs tracking-[0.3em] uppercase text-primary mb-4">Portfolio</p>
-          <h2 className="font-display text-4xl md:text-7xl lg:text-[6rem] font-black uppercase tracking-tighter leading-[0.9] mb-6">
-            Selected <span className="text-gradient-orange italic font-display">Works</span>
+          <div className="flex items-center gap-3 mb-4">
+            <motion.span
+              className="inline-block w-6 h-px bg-primary"
+              initial={{ scaleX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              style={{ originX: 0 }}
+            />
+            <p className="font-mono text-xs tracking-[0.3em] uppercase text-primary label-mono">Portfolio</p>
+          </div>
+          <h2 className="font-display text-4xl md:text-7xl lg:text-[6rem] font-black uppercase tracking-tighter leading-[0.9] mb-6 flex flex-wrap gap-x-4">
+            <span className="flex">
+              {"Selected".split("").map((char, i) => (
+                <motion.span
+                  key={i}
+                  custom={i}
+                  variants={letterVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  className="inline-block"
+                  style={{ display: char === " " ? "inline" : "inline-block" }}
+                >
+                  {char === " " ? "\u00a0" : char}
+                </motion.span>
+              ))}
+            </span>
+            <span className="text-shimmer italic font-display flex lowercase">
+              {"Works".split("").map((char, i) => (
+                <motion.span
+                  key={i}
+                  custom={i + 8}
+                  variants={letterVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  className="inline-block"
+                  style={{ display: char === " " ? "inline" : "inline-block" }}
+                >
+                  {char === " " ? "\u00a0" : char}
+                </motion.span>
+              ))}
+            </span>
           </h2>
           <p className="text-muted-foreground font-body text-base md:text-lg max-w-lg">A curated selection of projects across branding, events, and digital design.</p>
         </header>
